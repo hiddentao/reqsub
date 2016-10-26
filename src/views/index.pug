@@ -1,0 +1,27 @@
+html
+  head
+    title ReqSub
+    link(rel="stylesheet", href="/css/app.css")
+  body
+    h1 Reqsub running! v#{version}
+    p Subscribed clients: 
+    table#clients
+      thead
+        tr
+          th Id
+      tbody
+    hr
+    p Requests:
+    table#requests
+      thead
+        tr
+          th Time
+          th Method
+          th Query
+          th Body
+      tbody
+        
+  script(type="text/javascript", src="/socket.io.js")
+  script(type="text/javascript", src="/js/app.js")  
+  if config.mode === 'development'
+    script(type="text/javascript", src="http://localhost:53235/livereload.js")    
