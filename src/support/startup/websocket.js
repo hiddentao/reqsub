@@ -21,18 +21,28 @@ module.exports = function*(App) {
   const io = App.io.server = socket();
   io.serveClient(true);
   io.path("");
+
+  const clients = {};
  
   io.on('connection', (socket) => {    
-    const id = _.uuid.v4();
+    const id = socket.client.id;
+    
+    clients[id] = {
+      id: id
+    };
     
     App.logger.info(`New socket client connected: ${id}`);
     
     io.sockets.emit('client connect', { 
       id: id
     });
+
+    socket.emit('clients', _.values(clients));
     
     socket.on('disconnect', () => {
       App.logger.info(`Socket client disconnected: ${id}`);      
+      
+      delete clients[id];
       
       io.sockets.emit('client disconnect', { 
         id: id

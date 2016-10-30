@@ -3,15 +3,17 @@ html
     title ReqSub
     link(rel="stylesheet", href="/css/app.css")
   body
-    h1 Reqsub running! v#{version}
-    p Subscribed clients: 
+    h1 
+      span.text Reqsub started
+      span.version v#{version}
+      
+    h2 Subscribed clients: 
     table#clients
       thead
         tr
           th Id
       tbody
-    hr
-    p Requests:
+    h2 Requests:
     table#requests
       thead
         tr
@@ -20,6 +22,12 @@ html
           th Query
           th Body
       tbody
+    
+    footer
+      ul.links
+        li Created by <a href="https://twitter.com/hiddentao">@hiddentao</a>
+        li <a href="https://github.com/hiddentao/reqsub">Github</a>
+        
         
   script(type="text/javascript", src="/socket.io.js")
   script(type="text/javascript", src="/js/app.js")  

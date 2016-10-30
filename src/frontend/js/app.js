@@ -18,14 +18,16 @@ socket.on('incoming', function(req) {
 });
 
 
+socket.on('clients', (clients) => {
+  const elem = document.getElementById("clients").getElementsByTagName("tbody")[0];
+  
+  elem.innerHTML = buildClientRows(clients);
+});
+
 socket.on('client connect', (client) => {
   const elem = document.getElementById("clients").getElementsByTagName("tbody")[0];
   
-  elem.innerHTML += `
-    <tr id="${client.id}">
-      <td>${client.id}</td>
-    </tr>
-  `;
+  elem.innerHTML += buildClientRows([client]);
 });
 
 
@@ -36,3 +38,21 @@ socket.on('client disconnect', (client) => {
     elem.remove();
   }
 });
+
+
+function buildClientRows(clients) {
+  return clients.map((c) => {
+    const isMe = (c.id === socket.id);
+
+    let className = isMe ? "me" : '';
+    
+    return `
+      <tr id="${c.id}" class="${className}">
+        <td>${c.id}${isMe ? ' (me)' : ''}</td>
+      </tr>
+    `    
+  }).join("");
+}
+
+
+console.log(socket);
