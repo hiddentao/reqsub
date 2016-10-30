@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+const waigo = require('waigo'),
+  path = require('path'),
+  co = require('co');
+
+
+co(function*() {
+  /*
+  Initialise the framework.
+
+  If you need to override the application source folder and/or plugins to 
+  be loaded then this is the place to do it.
+
+   */
+  yield waigo.init({
+    appFolder: path.join(__dirname, '..', 'src')
+  });
+
+  /*
+  Start the application.
+
+  This loads in application configuration, runs all startup steps, sets up 
+  the middleware and kicks off the HTTP listener.
+   */
+  yield (new (waigo.load('application'))).start({
+    postConfig: function(config) {
+      config.logging.minLevel = 'INFO';
+      config.port = 3000;
+    }
+  });
+})
+  .catch(function(err) {
+    console.error(err);
+  });

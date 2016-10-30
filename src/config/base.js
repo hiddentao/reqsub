@@ -97,9 +97,6 @@ module.exports = function(config) {
    */
   config.shutdownSteps = [
     'listener',
-    'cron',
-    'acl',
-    'db',
   ];
 
 
